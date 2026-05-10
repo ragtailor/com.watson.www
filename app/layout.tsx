@@ -7,9 +7,9 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: 'Ragtailor | 엔터프라이즈 AI 설계 및 RAG 구현',
+  description: 'Ragtailor은 클린 DDD 기반 엔터프라이즈 AI 설계와 자체 데이터 처리 최적화 RAG 시스템 구현을 전문으로 합니다.',
+  generator: 'Ragtailor',
   icons: {
     icon: [
       {
@@ -35,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased">
+    <html lang="ko">
+      <body className="dark font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

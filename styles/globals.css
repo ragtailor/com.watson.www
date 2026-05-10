@@ -123,3 +123,25 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .marquee {
+    position: relative;
+    width: 100%;
+  }
+
+  .marquee-track {
+    display: inline-flex;
+    width: max(200%, 1200px);
+    animation: marquee-right 36s linear infinite;
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
