@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { AuthLoginButton } from "@/components/auth/AuthLoginButton";
+
 export function SiteNav() {
   return (
     <nav className="fixed top-0 right-0 left-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
@@ -42,12 +44,7 @@ export function SiteNav() {
             >
               [타이타닉]
             </Link>
-            <Link
-              href="/login"
-              className="rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-800 transition-colors hover:bg-slate-100 sm:px-4 sm:text-sm"
-            >
-              로그인
-            </Link>
+            <AuthLoginButton />
           </div>
         </div>
       </div>

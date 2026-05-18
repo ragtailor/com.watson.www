@@ -1,7 +1,14 @@
+import { AuthPanel } from "@/components/auth/AuthPanel";
+
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-slate-950 pt-16 flex items-center justify-center text-slate-100">
-      <p className="text-lg text-slate-400">로그인 페이지 준비 중입니다.</p>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 pt-16">
+      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
+        <h1 className="mb-6 text-center text-xl font-bold text-slate-900">
+          RAG<span className="text-sky-600">TAILOR</span>
+        </h1>
+        <AuthPanel />
+      </div>
     </div>
   );
 }
