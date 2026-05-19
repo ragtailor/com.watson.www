@@ -8,6 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ??
+  "http://127.0.0.1:8000";
+
 type AuthTab = "login" | "signup";
 
 type AuthPanelProps = {
@@ -22,15 +26,63 @@ export function AuthPanel({
   onSuccess,
 }: AuthPanelProps) {
   const [tab, setTab] = useState<AuthTab>(defaultTab);
+  const [signupLoading, setSignupLoading] = useState(false);
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSuccess?.();
   };
 
-  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSuccess?.();
+    const formData = new FormData(e.currentTarget);
+    const userId = String(formData.get("userId") ?? "");
+    const password = String(formData.get("password") ?? "");
+    const nickname = String(formData.get("nickname") ?? "");
+    const email = String(formData.get("email") ?? "");
+    const address = String(formData.get("address") ?? "");
+    const phone = String(formData.get("phone") ?? "");
+
+    setSignupLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: userId,
+          password,
+          nickname,
+          email,
+          address,
+          phone,
+        }),
+      });
+
+      const data = (await res.json()) as {
+        message?: string;
+        detail?: string | { msg?: string }[];
+      };
+
+      if (!res.ok) {
+        const detail =
+          typeof data.detail === "string"
+            ? data.detail
+            : Array.isArray(data.detail)
+              ? data.detail.map((d) => d.msg ?? String(d)).join(", ")
+              : "회원가입 요청에 실패했습니다.";
+        alert(detail);
+        return;
+      }
+
+      alert(
+        `${data.message ?? "회원가입이 완료되었습니다."}\n\n아이디: ${userId}\n닉네임: ${nickname}\n이메일: ${email}\n주소: ${address}\n전화번호: ${phone}`,
+      );
+      onSuccess?.();
+    } catch {
+      alert("서버에 연결할 수 없습니다. 백엔드가 실행 중인지 확인해 주세요.");
+    } finally {
+      setSignupLoading(false);
+    }
   };
 
   return (
@@ -96,7 +148,7 @@ export function AuthPanel({
               <Label htmlFor="signup-id">아이디</Label>
               <Input
                 id="signup-id"
-                name="id"
+                name="userId"
                 type="text"
                 autoComplete="username"
                 placeholder="아이디"
@@ -140,11 +192,36 @@ export function AuthPanel({
                 className="h-11 rounded-xl border-slate-200 bg-slate-50/50"
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="signup-address">주소</Label>
+              <Input
+                id="signup-address"
+                name="address"
+                type="text"
+                autoComplete="street-address"
+                placeholder="주소를 입력하세요"
+                required
+                className="h-11 rounded-xl border-slate-200 bg-slate-50/50"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="signup-phone">전화번호</Label>
+              <Input
+                id="signup-phone"
+                name="phone"
+                type="tel"
+                autoComplete="tel"
+                placeholder="010-0000-0000"
+                required
+                className="h-11 rounded-xl border-slate-200 bg-slate-50/50"
+              />
+            </div>
             <Button
               type="submit"
+              disabled={signupLoading}
               className="h-11 w-full rounded-full bg-sky-600 text-base font-semibold hover:bg-sky-500"
             >
-              회원가입
+              {signupLoading ? "처리 중..." : "회원가입"}
             </Button>
           </form>
         </TabsContent>

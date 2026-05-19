@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronDown, Mic, Plus, SendHorizontal, SlidersHorizontal } from "lucide-react";
 
+import { cn } from "@/lib/utils";
+
 type Role = "user" | "assistant";
 
 type ChatMessage = { id: string; role: Role; text: string };
@@ -38,7 +40,11 @@ function uid() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
-export function GeminiHeroChat() {
+type GeminiHeroChatProps = {
+  className?: string;
+};
+
+export function GeminiHeroChat({ className }: GeminiHeroChatProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState("");
   const [modelKey, setModelKey] = useState<(typeof MODEL_OPTIONS)[number]["key"]>("fast");
@@ -149,7 +155,7 @@ export function GeminiHeroChat() {
   };
 
   return (
-    <div className="mt-10 w-full max-w-2xl">
+    <div className={cn("w-full max-w-lg sm:max-w-xl", className)}>
       {messages.length > 0 && (
         <div
           ref={listRef}

@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { SiteNav } from '@/components/SiteNav'
+import { SiteNav } from '@/components/layout/SiteNav'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Ragtailor | 엔터프라이즈 AI 설계 및 RAG 구현',
-  description: 'Ragtailor은 클린 DDD 기반 엔터프라이즈 AI 설계와 자체 데이터 처리 최적화 RAG 시스템 구현을 전문으로 합니다.',
-  generator: 'Ragtailor',
+  title: 'RAGWATSON | AI 서비스 개발 교육',
+  description: 'RAGWATSON은 실무 중심 AI 서비스 개발 교육을 제공합니다. RAG, Multi-Agent, FastAPI 기반 엔터프라이즈 AI 역량을 키웁니다.',
+  generator: 'RAGWATSON',
   icons: {
     icon: [
       {
