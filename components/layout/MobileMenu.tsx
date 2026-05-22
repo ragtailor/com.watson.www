@@ -48,6 +48,15 @@ export function MobileMenu({ onClose, shopOpen, onToggleShop }: MobileMenuProps)
                 </a>
               </li>
             ))}
+            <li>
+              <Link
+                href="/lesson"
+                onClick={onClose}
+                className="block py-3.5 text-sm uppercase tracking-[0.1em] text-neutral-700"
+              >
+                수업용
+              </Link>
+            </li>
           </ul>
         )}
       </nav>

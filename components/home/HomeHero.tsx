@@ -39,20 +39,8 @@ export function HomeHero() {
             </div>
           </div>
 
-          <div className="mt-10 border-t border-neutral-200 pt-8 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-900">
-              Newsletter
-            </p>
-            <p className="mt-3 text-sm text-neutral-600">
-              교육 소식을 받아보세요
-            </p>
-            <a
-              href="mailto:rex@ragtailor.com"
-              className="mt-4 inline-flex w-full items-center justify-between border-b border-neutral-300 py-2 text-sm text-neutral-500"
-            >
-              <span>이메일 *</span>
-              <span aria-hidden>→</span>
-            </a>
+          <div className="mt-10 border-t border-neutral-200 pt-8">
+            <GeminiHeroChat className="mx-auto" />
           </div>
         </div>
       </section>

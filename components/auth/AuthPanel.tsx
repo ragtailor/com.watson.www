@@ -36,26 +36,15 @@ export function AuthPanel({
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const userId = String(formData.get("userId") ?? "");
-    const password = String(formData.get("password") ?? "");
-    const nickname = String(formData.get("nickname") ?? "");
-    const email = String(formData.get("email") ?? "");
-    const address = String(formData.get("address") ?? "");
-    const phone = String(formData.get("phone") ?? "");
+    const formProps = Object.fromEntries(formData.entries());
+
 
     setSignupLoading(true);
     try {
       const res = await fetch(`${API_BASE}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          id: userId,
-          password,
-          nickname,
-          email,
-          address,
-          phone,
-        }),
+        body: JSON.stringify(formProps),
       });
 
       const data = (await res.json()) as {
@@ -74,9 +63,7 @@ export function AuthPanel({
         return;
       }
 
-      alert(
-        `${data.message ?? "회원가입이 완료되었습니다."}\n\n아이디: ${userId}\n닉네임: ${nickname}\n이메일: ${email}\n주소: ${address}\n전화번호: ${phone}`,
-      );
+
       onSuccess?.();
     } catch {
       alert("서버에 연결할 수 없습니다. 백엔드가 실행 중인지 확인해 주세요.");

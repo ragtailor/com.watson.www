@@ -88,6 +88,12 @@ export function SiteNav() {
                 {category}
               </a>
             ))}
+            <Link
+              href="/lesson"
+              className="transition-colors hover:text-neutral-900"
+            >
+              수업용
+            </Link>
           </nav>
         </div>
 
