@@ -69,7 +69,7 @@ export function GeminiHeroChat({ className }: GeminiHeroChatProps) {
   useEffect(() => {
     resizeTextarea();
   }, [draft, resizeTextarea]);
-
+// 불필요한 코드 추가 
   const send = useCallback(async () => {
     const trimmed = draft.trim();
     if (!trimmed || loading) return;
