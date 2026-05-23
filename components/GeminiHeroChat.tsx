@@ -14,18 +14,29 @@ const MODEL_OPTIONS = [
   { key: "pro", label: "고품질" },
 ] as const;
 
-/** FastAPI 백엔드 (기본: localhost:8000) */
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ??
-  "http://127.0.0.1:8000";
+  "";
 
 function parseApiError(data: unknown, fallback: string): string {
   if (!data || typeof data !== "object") return fallback;
-  const body = data as { detail?: unknown; error?: string };
-  const detail = body.detail ?? body.error;
-  if (typeof detail === "string") return detail;
-  if (Array.isArray(detail)) {
-    return detail
+  const body = data as {
+    detail?: unknown;
+    error?: unknown;
+    message?: unknown;
+  };
+  const rawError = body.detail ?? body.error ?? body.message;
+  if (typeof rawError === "string") return rawError;
+  if (typeof rawError === "object" && rawError !== null) {
+    if ("message" in rawError && typeof (rawError as any).message === "string") {
+      return (rawError as any).message;
+    }
+    if ("status" in rawError && typeof (rawError as any).status === "string") {
+      return `${String((rawError as any).message ?? fallback)} (${(rawError as any).status})`;
+    }
+  }
+  if (Array.isArray(rawError)) {
+    return rawError
       .map((item) =>
         typeof item === "object" && item !== null && "msg" in item
           ? String((item as { msg: string }).msg)
@@ -81,16 +92,19 @@ export function GeminiHeroChat({ className }: GeminiHeroChatProps) {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE}/chat`, {
+      const res = await fetch(`${API_BASE}/api/gemini/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: trimmed }),
+        body: JSON.stringify({
+          messages: [{ role: "user", text: trimmed }],
+          modelKey,
+        }),
       });
-      const data = (await res.json()) as { reply?: string; detail?: unknown };
+      const data = (await res.json()) as { text?: string; detail?: unknown };
       if (!res.ok) {
         throw new Error(parseApiError(data, `요청 실패 (${res.status})`));
       }
-      const reply = data.reply?.trim();
+      const reply = data.text?.trim();
       if (!reply) {
         throw new Error("빈 응답을 받았습니다.");
       }

@@ -1,11 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const MODEL_IDS: Record<string, string> = {
-  fast: "gemini-2.0-flash",
+  fast: "gemini-2.5-flash",
   pro: "gemini-1.5-pro",
 };
 
 type ChatMessage = { role: "user" | "assistant"; text: string };
+
+function extractGeminiError(raw: string, parsed: unknown) {
+  if (typeof parsed === "object" && parsed !== null) {
+    const body = parsed as Record<string, unknown>;
+    const apiError = body.error ?? body.message;
+    if (typeof apiError === "string") return apiError;
+    if (typeof apiError === "object" && apiError !== null) {
+      const errObj = apiError as Record<string, unknown>;
+      if (typeof errObj.message === "string") return errObj.message;
+      if (typeof errObj.status === "string") {
+        return `${String(errObj.message ?? "Gemini API 오류")} (${errObj.status})`;
+      }
+      if (Array.isArray(errObj.details) && errObj.details.length > 0) {
+        const firstDetail = errObj.details[0];
+        if (
+          typeof firstDetail === "object" &&
+          firstDetail !== null &&
+          "description" in firstDetail &&
+          typeof (firstDetail as any).description === "string"
+        ) {
+          return (firstDetail as any).description;
+        }
+      }
+    }
+  }
+  return raw || "Gemini API 오류";
+}
 
 function toGeminiContents(messages: ChatMessage[]) {
   return messages.map((m) => ({
@@ -51,9 +78,16 @@ export async function POST(req: NextRequest) {
   });
 
   const raw = await upstream.text();
+  let upstreamData: unknown;
+  try {
+    upstreamData = JSON.parse(raw);
+  } catch {
+    upstreamData = undefined;
+  }
+
   if (!upstream.ok) {
     return NextResponse.json(
-      { error: raw || `Gemini API 오류 (${upstream.status})` },
+      { error: extractGeminiError(raw, upstreamData) },
       { status: upstream.status >= 400 ? upstream.status : 502 }
     );
   }
