@@ -92,9 +92,9 @@ export function MobileMenu({ onClose, shopOpen, onToggleShop }: MobileMenuProps)
 
       <div className="mt-auto border-t border-neutral-200 pt-6">
         <div className="flex items-center justify-between text-xs uppercase tracking-[0.1em] text-neutral-600">
-          <span>문의: rex@ragtailor.com</span>
+          <span>문의: rex@ragwatson.com</span>
           <a
-            href="mailto:rex@ragtailor.com"
+            href="mailto:rex@ragwatson.com"
             onClick={onClose}
             className="font-semibold text-neutral-900 underline underline-offset-2"
           >

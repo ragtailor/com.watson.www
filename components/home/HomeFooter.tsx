@@ -11,8 +11,8 @@ export function HomeFooter() {
           <Link href="/notice" className="hover:text-neutral-900">
             공지사항
           </Link>
-          <a href="mailto:rex@ragtailor.com" className="hover:text-neutral-900">
-            rex@ragtailor.com
+          <a href="mailto:rex@ragwatson.com" className="hover:text-neutral-900">
+            rex@ragwatson.com
           </a>
         </div>
       </div>

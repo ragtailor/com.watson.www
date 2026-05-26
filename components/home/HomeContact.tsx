@@ -12,10 +12,10 @@ export function HomeContact() {
           AI 서비스 개발 교육 일정·커리큘럼 문의는 아래 이메일로 연락주세요.
         </p>
         <a
-          href="mailto:rex@ragtailor.com"
+          href="mailto:rex@ragwatson.com"
           className="mt-8 inline-block border border-neutral-900 px-8 py-3 text-[11px] font-medium uppercase tracking-[0.15em] text-neutral-900 transition-colors hover:bg-neutral-900 hover:text-white"
         >
-          rex@ragtailor.com
+          rex@ragwatson.com
         </a>
       </div>
     </section>

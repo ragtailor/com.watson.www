@@ -61,7 +61,7 @@ export function SiteNav() {
             </nav>
 
             <div className="flex items-center gap-6">
-              <a href="mailto:rex@ragtailor.com" className={utilityClass}>
+              <a href="mailto:rex@ragwatson.com" className={utilityClass}>
                 Contact
               </a>
               <Link href="/lesson" className={utilityClass}>
@@ -108,7 +108,7 @@ export function SiteNav() {
           </Link>
 
           <div className="flex items-center gap-5">
-            <a href="mailto:rex@ragtailor.com" className={utilityClass}>
+            <a href="mailto:rex@ragwatson.com" className={utilityClass}>
               Contact
             </a>
             {menuOpen ? (
