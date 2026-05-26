@@ -64,8 +64,8 @@ export function SiteNav() {
               <a href="mailto:rex@ragtailor.com" className={utilityClass}>
                 Contact
               </a>
-              <Link href="/titanic" className={utilityClass}>
-                Lab
+              <Link href="/lesson" className={utilityClass}>
+                Lesson
               </Link>
               <AuthLoginButton className="rounded-none border-0 bg-transparent px-0 py-0 text-[11px] font-normal uppercase tracking-[0.15em] text-neutral-900 shadow-none hover:bg-transparent hover:opacity-60" />
             </div>
