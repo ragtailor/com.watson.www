@@ -15,7 +15,7 @@ type MobileMenuProps = {
 const secondaryLinks = [
   { href: "/#services", label: "교육개요" },
   { href: "/notice", label: "FAQ" },
-  { href: "/titanic", label: "Lab" },
+  { href: "/titanic", label: "Lesson" },
 ] as const;
 
 export function MobileMenu({ onClose, shopOpen, onToggleShop }: MobileMenuProps) {
